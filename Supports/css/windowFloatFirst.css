@@ -1,0 +1,90 @@
+.windowFloat {
+  transition: all .5s;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 530px;
+  border: 1px solid #97a7be;
+  background-color: #1b4074;
+  z-index: 99;
+  border-radius: 2px;
+  opacity: .9; }
+  .windowFloat .header-windowFloat {
+    width: 100%;
+    display: flex;
+    background-color: rgba(70, 80, 160, 0.95);
+    justify-content: space-between; }
+    .windowFloat .header-windowFloat .left {
+      padding-left: 8px;
+      display: flex;
+      align-items: center; }
+      .windowFloat .header-windowFloat .left img {
+        width: 18px;
+        height: 18px; }
+      .windowFloat .header-windowFloat .left span {
+        display: block;
+        padding: 10px;
+        font-size: 16px;
+        color: #fff;
+        margin-top: 2px; }
+    .windowFloat .header-windowFloat .right {
+      display: flex;
+      align-items: center;
+      padding-right: 10px; }
+      .windowFloat .header-windowFloat .right .r-box {
+        background-color: #456a9b;
+        display: flex;
+        align-items: center;
+        width: 18px;
+        height: 13px; }
+        .windowFloat .header-windowFloat .right .r-box img {
+          width: 100%;
+          height: 100%;
+          cursor: pointer; }
+  .windowFloat .body-windowFloat {
+    width: 100%; }
+    .windowFloat .body-windowFloat ul {
+      padding-left: 0; }
+    .windowFloat .body-windowFloat li {
+      list-style: none;
+      padding: 8px 0 8px 20px;
+      color: #fff;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; }
+      .windowFloat .body-windowFloat li span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 150px; }
+      .windowFloat .body-windowFloat li i {
+        font-size: 16px;
+        font-style: normal;
+        padding-right: 30px; }
+  .windowFloat .floatBoxEchart {
+    position: relative;
+    width: 500px;
+    z-index: 9999;
+    height: 220px; }
+    .windowFloat .floatBoxEchart p {
+      padding-left: 5px;
+      padding-top: 5px;
+      color: #fff;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 18px; }
+    .windowFloat .floatBoxEchart .ebox {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: auto; }
+      .windowFloat .floatBoxEchart .ebox #firstPie,
+      .windowFloat .floatBoxEchart .ebox #twoPie,
+      .windowFloat .floatBoxEchart .ebox #threePie {
+        width: 120px;
+        z-index: 9999999;
+        height: 190px; }

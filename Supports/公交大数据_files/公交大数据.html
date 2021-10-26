@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en" daily_flag="2" secure_city="010" secure_cityname="北京市">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>公交大数据</title>
+    <link rel="stylesheet" href="./css/common.css" class="AMap.style">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./公交大数据_files/bootstrap.min.css">
+    <link href="./公交大数据_files/global.css" rel="stylesheet">
+    <link href="./公交大数据_files/gri.controls.css" rel="stylesheet">
+    <link href="./公交大数据_files/datepicker.min.css" rel="stylesheet">
+    <link href="./公交大数据_files/pagination.css" rel="stylesheet">
+    <link rel="stylesheet" href="./公交大数据_files/kuma.css">
+    <link href="./公交大数据_files/main.css" rel="stylesheet">
+    <link href="./公交大数据_files/index.css" rel="stylesheet">
+    <!-- 浮动框css -->
+    <link rel="stylesheet" href="./css/windowFloatFirst.css">
+    <!-- 浮动框css -->
+
+    <script src="./公交大数据_files/jquery-1.11.1.min.js"></script>
+    <script src="./公交大数据_files/bootstrap.min.js"></script>
+    <script src="./公交大数据_files/vue.min.js"></script>
+    <script src="./公交大数据_files/vue-router.min.js"></script>
+    <script src="./公交大数据_files/jquery.mousewheel.min.js"></script>
+    <script src="./公交大数据_files/jquery.pagination.js"></script>
+    <script src="./公交大数据_files/jquery.circliful.min.js"></script>
+    <script src="./公交大数据_files/jquery.cookie.js"></script>
+    <script src="./公交大数据_files/tween.js"></script>
+    <script src="./公交大数据_files/underscore.js"></script>
+    <script src="./公交大数据_files/velocity.js"></script>
+    <script src="./公交大数据_files/velocity.ui.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script src="./js/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 浮动框 -->
+        <div class="windowFloat" :style="{'display':isFloat?'block':'none'}">
+            <div class="header-windowFloat">
+                <div class="left">
+                    <img src="./image/tj.png" alt="" srcset="">
+                    <span>统计信息</span>
+                </div>
+                <div class="right">
+                    <div class="r-box">
+                        <img src="./image/ss.png" alt="" @click="closeFloat">
+                    </div>
+                </div>
+            </div>
+            <div class="body-windowFloat">
+                <p>线路名称：{{floatData.line_name}}</p>
+                <div id="radarChart"></div>
+                <!-- <ul>
+                    <li>
+                        <span class="title">线路名称</span>
+                        <i class="value">{{floatData.line_name}}</i>
+                    </li>
+                    <li>
+                        <span class="title">总目标值</span>
+                        <i class="value">{{floatData.sum}}</i>
+                    </li>
+                    <li>
+                        <span class="title">行程时间稳定性</span>
+                        <i class="value">{{floatData.travelTimeStability}}</i>
+                    </li>
+                    <li>
+                        <span class="title">归一化线路需求量</span>
+                        <i class="value">{{floatData.normalizedLineCommutingDemand}}</i>
+                    </li>
+                    <li>
+                        <span class="title">线路通勤时间比倒数</span>
+                        <i class="value">{{floatData.lineCommutingTimeRatioReciprocal}}</i>
+                    </li>
+                    <li>
+                        <span class="title">归一化客流服务人次</span>
+                        <i class="value">{{floatData.normalizedPassengerFlowServicePersonTimes}}</i>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+
+        <!-- 浮动框 -->
+
+        <div class="amap_bg amap-container" id="amap" style="background: rgb(24, 36, 51);">
+            <object
+                style="display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+                type="text/html" data="./公交大数据_files/saved_resource.html"></object>
+            <div class="amap-maps">
+                <div class="amap-drags">
+                    <div class="amap-layers" style="transform: translateZ(0px);">
+                        <div class="amap-markers" style="position: absolute; z-index: 120; top: 364px; left: 720px;">
+                        </div>
+                        <div class="amap-layer"
+                            style="position: absolute; z-index: 0; top: 470px; left: 983px; display: block;"><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: 201px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: 201px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: 201px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: -823px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: -823px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: -823px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: -55px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: -311px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: -567px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: -55px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: -55px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: -311px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: -311px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: -567px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: -567px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: 247px; left: 201px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256" ;
+                                style="position: absolute; top: 247px; left: -55px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: 247px; left: -311px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: 247px; left: -567px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: 247px; left: -823px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -9px; left: -1079px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -265px; left: -1079px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: -521px; left: -1079px; width: 256px; height: 256px; z-index: 11;"></canvas><canvas
+                                height="256" width="256"
+                                style="position: absolute; top: 247px; left: -1079px; width: 256px; height: 256px; z-index: 11;"></canvas>
+                        </div><canvas class="amap-layer" width="1440" height="729"
+                            style="position: absolute; z-index: 1; height: 729px; width: 1440px; top: 0px; left: 0px;"></canvas><canvas
+                            class="amap-layer amap-vectors" width="1440" height="729"
+                            style="position: absolute; z-index: 110; top: 0px; left: 0px; display: block;"></canvas><canvas
+                            class="amap-labels" draggable="false" width="1440" height="729"
+                            style="position: absolute; z-index: 99; height: 729px; width: 1440px; top: 0px; left: 0px;"></canvas>
+                    </div>
+                    <div class="amap-overlays"></div>
+                </div>
+            </div>
+            <div style="display: none;"></div>
+            <div class="amap-controls">
+                <div class="amap-scalecontrol" style="left: 2px; bottom: 20px; visibility: visible;">
+                    <div class="amap-scale-text" style="width: 93.3421px;">5 公里</div>
+                    <div class="amap-scale-line">
+                        <div class="amap-scale-edgeleft"></div>
+                        <div class="amap-scale-edgeright" style="left: 86.3421px;"></div>
+                        <div class="amap-scale-middle" style="width: 85.3421px;"></div>
+                    </div>
+                </div>
+            </div><a class="amap-logo"><img src="./公交大数据_files/ACME.png"></a>
+            <div class="amap-copyright" style="display: none; visibility: hidden;">
+                <!--v1.4.15--> © 2021 AutoNavi <span class="amap-mcode"></span>
+            </div>
+        </div>
+        <div class="top_bar" style="min-width: 1280px">
+            <div class="city" id="city"><i class="cityLocation"></i><span class="citytext">北京城区</span><i
+                    class="down"></i>
+            </div>
+            <div class="topbar_right" style="min-width: 1280px">
+                <ul class="parent">
+                    <li class="has_child active">
+                        <a href="./公交大数据.html"><span>原始线网</span><i class="down"></i></a>
+                    </li>
+                    <li class="has_child">
+                        <span>统计分析</span><i class="down"></i></a>
+
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li class="has_child">
+                        <a href="./优化线网.html"><span>优化线网</span><i class="down"></i></a>
+                    </li>
+                    <li class="has_child">
+                        <a class="parent" href="javascript:void(0)"><span>数据发布</span><i class="down"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div id="logo"
+                style="background: url(public/image/title_center.png) no-repeat;background-size: 100%, 100%;">
+                <img class="title_logo" src="./公交大数据_files/acme0.png">
+                <span class="topbar_name"><span id="topbar_name">北京市公交线网优化</span></span>
+            </div>
+        </div>
+        <div class="maincontent">
+
+            <div class="nav_title fn-clear">
+
+                <div class="buslineSearchWrap" style="display: none;">
+                </div>
+            </div>
+        </div>
+        <div id="seachBox">
+            <input :value="currentItem.val" type="text" @focus="focusStart" @keyup="filter($event)" placeholder="搜索公交线"
+                id="busline-search" autocomplete="off">
+            <div id="searchList" :style="{'display':isShow?'block':'none'}">
+                <ul>
+                    <li key='item.id' @click="searchList($event)" v-for="item in liList">{{item.val}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="panel"></div>
+        <div class="loading" v-show="loading">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!-- <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=2625c0c9182a614ecd3b20fddd7e1b62&plugin=AMap.Driving&plugin=AMap.Transfer&AMap.LineSearch">
+        </script> -->
+
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=2625c0c9182a614ecd3b20fddd7e1b62&plugin=AMap.Transfer&plugin=AMap.LineSearch"></script>
+    <script>
+        // 搜索数据
+        const liList = [
+            {
+                "id": 1,
+                "val": "130路(北官厅--东湖)",
+                "start": [116.459831, 40.008392],
+                "end": [116.430321, 39.94931]
+            },
+            {
+                "id": 2,
+                "val": "416路(东直门枢纽站--来广营西桥东)",
+                "start": [116.473465, 39.983307],
+                "end": [116.475914, 40.011448]
+            },
+            {
+                "id": 3,
+                "val": "421路(东湖--大北窑南)",
+                "start": [116.460035, 40.008303],
+                "end": [116.480087, 39.985985]
+            },
+            {
+                "id": 4,
+                "val": "467路(地铁善各庄站--静安庄)",
+                "start": [116.467122, 40.013698],
+                "end": [116.456657, 39.983307]
+            },
+            {
+                "id": 5,
+                "val": "467路(静安庄--地铁善各庄站)",
+                "start": [116.456863, 39.983433],
+                "end": [116.467415, 40.013542]
+            },
+            {
+                "id": 6,
+                "val": "536路(左家庄--屏翠西路东口)",
+                "start": [116.466766, 39.978596],
+                "end": [116.477257, 40.01421]
+            },
+            {
+                "id": 7,
+                "val": "538路(孙河公交场站--国家体育场东)",
+                "start": [116.45911, 39.997127],
+                "end": [116.459114, 39.997128]
+            },
+            {
+                "id": 8,
+                "val": "547路(地铁善各庄站--和平西桥)",
+                "start": [116.478172, 40.010464],
+                "end": [116.420035, 39.969032]
+            },
+            {
+                "id": 9,
+                "val": "593路(地铁北苑路北站--环行铁道)",
+                "start": [116.417946, 40.030968],
+                "end": [116.454388, 39.99704]
+            },
+            {
+                "id": 10,
+                "val": "657路(东湖--郎辛庄)",
+                "start": [116.460035, 40.008303],
+                "end": [116.473900, 39.982914]
+            },
+            {
+                "id": 11,
+                "val": "682路(青年路小区--阜安西路)",
+                "start": [116.473465, 39.983307],
+                "end": [116.478394, 39.996635]
+            },
+            {
+                "id": 12,
+                "val": "696路(国展新馆公交场站--芍药居公交场站)",
+                "start": [116.480392, 39.986027],
+                "end": [116.453026, 39.982426]
+            },
+            {
+                "id": 13,
+                "val": "696路(芍药居公交场站--国展新馆公交场站)",
+                "start": [116.440331, 39.977665],
+                "end": [116.541763, 40.076077]
+            },
+            {
+                "id": 14,
+                "val": "944路(奶子房--安贞桥西)",
+                "start": [116.461945, 40.040264],
+                "end": [116.402939, 39.969002]
+            }
+        ]
+        // 统计信息数据
+        const beforeList = [
+            {
+                "line_no": "Line130_B",
+                "line_name": "130路(北官厅--东湖)",
+                "sum": 1.54,
+                "travelTimeStability": 0.81,
+                "normalizedLineCommutingDemand": 0.12,
+                "lineCommutingTimeRatioReciprocal": 0.38,
+                "normalizedPassengerFlowServicePersonTimes": 0.24
+            },
+            {
+                "line_no": "Line416_A",
+                "line_name": "416路(东直门枢纽站--来广营西桥东)",
+                "sum": 1.57,
+                "travelTimeStability": 0.75,
+                "normalizedLineCommutingDemand": 0.20,
+                "lineCommutingTimeRatioReciprocal": 0.35,
+                "normalizedPassengerFlowServicePersonTimes": 0.26
+            },
+            {
+                "line_no": "Line421_B",
+                "line_name": "421路(东湖--大北窑南)",
+                "sum": 1.82,
+                "travelTimeStability": 0.62,
+                "normalizedLineCommutingDemand": 0.13,
+                "lineCommutingTimeRatioReciprocal": 0.38,
+                "normalizedPassengerFlowServicePersonTimes": 0.69
+            },
+            {
+                "line_no": "Line467_A",
+                "line_name": "467路(地铁善各庄站--静安庄)",
+                "sum": 2.85,
+                "travelTimeStability": 0.92,
+                "normalizedLineCommutingDemand": 0.75,
+                "lineCommutingTimeRatioReciprocal": 0.45,
+                "normalizedPassengerFlowServicePersonTimes": 0.73
+            },
+            {
+                "line_no": "Line467_B",
+                "line_name": "467路(静安庄--地铁善各庄站)",
+                "sum": 2.95,
+                "travelTimeStability": 0.89,
+                "normalizedLineCommutingDemand": 0.88,
+                "lineCommutingTimeRatioReciprocal": 0.47,
+                "normalizedPassengerFlowServicePersonTimes": 0.71
+            },
+            {
+                "line_no": "Line536_A",
+                "line_name": "536路(左家庄--屏翠西路东口)",
+                "sum": 2.04,
+                "travelTimeStability": 0.86,
+                "normalizedLineCommutingDemand": 0.63,
+                "lineCommutingTimeRatioReciprocal": 0.35,
+                "normalizedPassengerFlowServicePersonTimes": 0.20
+            },
+            {
+                "line_no": "Line538_A",
+                "line_name": "538路(孙河公交场站--国家体育场东)",
+                "sum": 3.00,
+                "travelTimeStability": 0.75,
+                "normalizedLineCommutingDemand": 0.98,
+                "lineCommutingTimeRatioReciprocal": 0.44,
+                "normalizedPassengerFlowServicePersonTimes": 0.83
+            },
+            {
+                "line_no": "Line547_A",
+                "line_name": "547路(地铁善各庄站--和平西桥)",
+                "sum": 2.56,
+                "travelTimeStability": 0.71,
+                "normalizedLineCommutingDemand": 0.62,
+                "lineCommutingTimeRatioReciprocal": 0.40,
+                "normalizedPassengerFlowServicePersonTimes": 0.83
+            },
+            {
+                "line_no": "Line593_A",
+                "line_name": "593路(地铁北苑路北站--环行铁道)",
+                "sum": 1.78,
+                "travelTimeStability": 0.8,
+                "normalizedLineCommutingDemand": 0.26,
+                "lineCommutingTimeRatioReciprocal": 0.45,
+                "normalizedPassengerFlowServicePersonTimes": 0.26
+            },
+            {
+                "line_no": "Line657_A",
+                "line_name": "657路(东湖--郎辛庄)",
+                "sum": 2.09,
+                "travelTimeStability": 0.61,
+                "normalizedLineCommutingDemand": 0.24,
+                "lineCommutingTimeRatioReciprocal": 0.50,
+                "normalizedPassengerFlowServicePersonTimes": 0.75
+            },
+            {
+                "line_no": "Line682_B",
+                "line_name": "682路(青年路小区--阜安西路)",
+                "sum": 1.15,
+                "travelTimeStability": 0.61,
+                "normalizedLineCommutingDemand": 0.05,
+                "lineCommutingTimeRatioReciprocal": 0.40,
+                "normalizedPassengerFlowServicePersonTimes": 0.09
+            },
+            {
+                "line_no": "Line696_A",
+                "line_name": "696路(国展新馆公交场站--芍药居公交场站)",
+                "sum": 1.73,
+                "travelTimeStability": 0.59,
+                "normalizedLineCommutingDemand": 0.36,
+                "lineCommutingTimeRatioReciprocal": 0.43,
+                "normalizedPassengerFlowServicePersonTimes": 0.36
+            },
+            {
+                "line_no": "Line696_B",
+                "line_name": "696路(芍药居公交场站--国展新馆公交场站)",
+                "sum": 1.99,
+                "travelTimeStability": 0.74,
+                "normalizedLineCommutingDemand": 0.30,
+                "lineCommutingTimeRatioReciprocal": 0.40,
+                "normalizedPassengerFlowServicePersonTimes": 0.56
+            },
+            {
+                "line_no": "Line944_A",
+                "line_name": "944路(奶子房--安贞桥西)",
+                "sum": 1.80,
+                "travelTimeStability": 0.81,
+                "normalizedLineCommutingDemand": 0.22,
+                "lineCommutingTimeRatioReciprocal": 0.41,
+                "normalizedPassengerFlowServicePersonTimes": 0.35
+            }
+        ]
+
+        var map = new AMap.Map("amap", {
+            resizeEnable: true,
+            center: [116.397428, 39.90923],
+            zoom: 15,
+            // mapStyle: 'amap://styles/4e20baf67ef643952ae6357398c3c1c9'
+            mapStyle: 'amap://styles/darkblue'
+        });
+        var transOptions = {
+            map: map,
+            city: '北京市',
+            panel: 'panel',
+            policy: AMap.TransferPolicy.LEAST_TIME //乘车策略
+        };
+
+        vm = new Vue({
+            el: '#app',
+            data: {
+                liList: [],
+                beforeList: [],
+                line: [{
+                    keyword: '东湖',
+                    city: '北京'
+                },
+                //第一个元素city缺省时取transOptions的city属性
+                {
+                    keyword: '北官厅',
+                    city: '北京'
+                },
+                ],
+                loading: false,
+                currentItem: null,
+                isShow: false,
+                isFloat: false,
+                // 浮窗数据
+                floatData: []
+            },
+            async created() {
+                this.beforeList = beforeList
+                this.liList = await this.getliList()
+            },
+            beforeDestory() {
+                this.isFloat = false
+            },
+            destrory() {
+                this.isFloat = false
+            },
+            methods: {
+                // 请求数据
+                getliList(keyword) {
+                    // axios.get('http://test.com').then(res => {
+                    //     console.log(res);
+                    // })
+                    // 模拟请求
+                    this.loading = true
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            let temp = liList.filter((item, index, arr) => {
+                                return item.val.indexOf(keyword) != -1
+                            })
+                            if (temp.length === 0) {
+                                result = liList
+                            } else {
+                                result = temp
+                            }
+                            this.loading = false
+                            resolve(result)
+                        }, 1000)
+                    })
+                },
+                // 关闭浮窗
+                closeFloat() {
+                    this.isFloat = false
+                },
+                searchList: function (e) {
+                    this.isShow = false;
+                    this.isFloat = true
+                    let currentItem = this.liList.find((o, index) => o.val === e.target.innerText)
+                    this.currentItem = currentItem
+                    map.clearMap();
+                    var linesearch = new AMap.LineSearch({
+                        pageIndex: 1,
+                        city: '北京',
+                        pageSize: 2,
+                        extensions: 'all'
+                    });
+                    const { val } = currentItem
+                    const matcher = val.match(/\((.+)--(.+)\)/)
+                    const start_stop = matcher[1]
+                    const end_stop = matcher[2]
+                    console.log(val, currentItem);
+                    //搜索“536”相关公交线路
+                    const name = val.match(/([^\(]+)/)[1]
+                    linesearch.search(name, (status, result) => {
+                        map.clearMap()
+                        console.log(status, result);
+                        if (status === 'complete' && result.info === 'OK') {
+                            result = result.lineInfo.filter(item => item.start_stop.match(start_stop) && item.end_stop.match(end_stop))
+                            this.lineSearch_Callback(result);
+                        } else {
+                            alert(status);
+                        }
+                    });
+                    // const transfer = new AMap.Transfer(transOptions);
+                    // transfer.clear()
+                    // transfer.search(new AMap.LngLat(...currentItem.start), new AMap.LngLat(...currentItem.end));
+                    let obj = this.beforeList.find((o, index) => o.line_name === e.target.innerText)
+                    this.floatData = obj
+                    this.renderRadarChart(obj)
+                },
+                // 渲染雷达图
+                renderRadarChart(dataObj) {
+
+                    const fieldMap = [
+                        { name: '总目标值', field: 'sum', max: 10 },
+                        { name: '行程时间/稳定性', field: 'travelTimeStability', max: 1 },
+                        { name: '归一化/线路需求量', field: 'normalizedLineCommutingDemand', max: 1 },
+                        { name: '线路通勤/时间比倒数', field: 'lineCommutingTimeRatioReciprocal', max: 1 },
+                        { name: '归一化客流/服务人次', field: 'normalizedPassengerFlowServicePersonTimes', max: 1 }]
+                    // console.log(11111, dataObj);
+                    const indicator = []
+                    const value = []
+                    fieldMap.forEach(item => {
+                        indicator.push({
+                            name: item.name,
+                            max: item.max
+                        })
+                        value.push(dataObj[item.field] || 0)
+                    })
+                    this.radarChart = echarts.init(document.getElementById('radarChart'));
+                    const option = {
+                        radar: {
+                            radius: '80',
+                            indicator,
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    fontSize: 12,
+                                },
+                                formatter(params) {
+                                    return params.replace(/\//g, "\n");
+                                },
+                            }
+                        },
+                        series: [{
+                            type: 'radar',
+                            itemStyle: {
+                                color: '#F9713C'
+                            },
+                            data: [
+                                {
+                                    value
+                                }
+                            ]
+                        }]
+                    };
+                    this.radarChart.setOption(option)
+                },
+
+                /*公交路线查询服务返回数据解析概况*/
+                lineSearch_Callback(dataArr) {
+                    var lineArr = dataArr;
+                    var lineNum = dataArr.length;
+                    if (lineNum == 0) {
+                    } else {
+                        for (var i = 0; i < lineNum; i++) {
+                            var pathArr = lineArr[i].path;
+                            var stops = lineArr[i].via_stops;
+                            var startPot = stops[0].location;
+                            var endPot = stops[stops.length - 1].location;
+                            if (i == 0) //作为示例，只绘制一条线路
+                                this.drawbusLine(startPot, endPot, pathArr);
+
+                        }
+                    }
+                },
+                /*绘制路线*/
+                drawbusLine(startPot, endPot, BusArr) {
+                    //绘制起点，终点
+                    new AMap.Marker({
+                        map: map,
+                        position: startPot, //基点位置
+                        icon: "https://webapi.amap.com/theme/v1.3/markers/n/start.png",
+                        zIndex: 10
+                    });
+                    new AMap.Marker({
+                        map: map,
+                        position: endPot, //基点位置
+                        icon: "https://webapi.amap.com/theme/v1.3/markers/n/end.png",
+                        zIndex: 10
+                    });
+                    //绘制乘车的路线
+                    busPolyline = new AMap.Polyline({
+                        map: map,
+                        path: BusArr,
+                        showDir: true,
+                        strokeColor: "#09f",//线颜色
+                        strokeOpacity: 0.8,//线透明度
+                        isOutline: true,
+                        outlineColor: 'white',
+                        strokeWeight: 6//线宽
+                    });
+                    map.setFitView();
+                },
+                focusStart() {
+                    this.isShow = true;
+                },
+                filter(e) {
+                    this.getliList(e.target.value).then(res => {
+                        this.liList = res
+                    })
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+/*@media screen and (max-height: 650px) {*/
+    /*.sortWrap{}*/
+/*}*/
+/*@media screen and (min-width: 768px) {*/
+    /*.top_bar #logo{width: 206px;margin-left: -103px;}*/
+    /*.progress{width: 100px;}*/
+/*}*/
+@media screen and (min-width: 900px) {
+    html, body{font-size: 50%;}
+    .top_bar #logo{width: 206px;margin-left: -103px;}
+    .top_bar #logo .title_logo{width: 20px;height: 20px;float: left;margin-left: 15px;margin-top: 5px;}
+    .top_bar #logo .topbar_name{font-size: 14px;margin-left: 5px;height: 30px;line-height: 30px;}
+    .city{height: 20px;line-height: 19px;border-radius: 10px;top:5px;width: 80px;}
+    .topbar_right{height: 30px;line-height: 30px;}
+    #city .cityLocation{top:-3px;}
+    #city i.down{top:-5px;}
+    /*.numList{top:50px;}*/
+    .frontleft_wrap{width: 30%;height: 80%;bottom:60px;}
+    /*.table_wrap table td .dirdesc{width: 100px;}*/
+    .table_wrap table.nostyle td .title{margin-top: -5px;}
+    .progress{width: 60px;}
+    .realbus_chart_wrap .date_input{width: 120px;}
+    .date_pop_dlg{right: 120px;}
+}
+@media screen and (min-width: 1200px) {
+    html, body{font-size: 62.5%;}
+    .top_bar #logo{width: 344px;margin-left: -172px;}
+    .top_bar #logo .title_logo{width: 36px;height: 36px;float: left;margin-left: 30px;margin-top: 8px;}
+    .top_bar #logo .topbar_name{height: 50px;line-height: 50px;font-size: 22px;float: left;margin-left: 10px;}
+    .city{height: 26px;line-height: 25px;top:8px;border-radius: 20px;width: 95px;}
+    .topbar_right{height: 40px;line-height: 40px;}
+    #city .cityLocation{top:-6px;}
+    #city i.down{top:-8px;}
+    /*.numList{top:80px;}*/
+    .table_wrap table.nostyle td .title{margin-top: -15px;}
+    .progress{width: 100px;}
+    .realbus_chart_wrap .date_input{width: 179px;}
+}
+@media screen and (min-width: 1290px) {
+    .frontleft_wrap{width: 400px;}
+    .date_pop_dlg{right: 130px;}
+}
+@media screen and (min-width: 1500px) {
+    .progress{width: 135px;}
+}
+@media screen and (min-width: 1610px) {
+    .progress{width: 165px;}
+}
+@media screen and (min-width: 1899px) {
+    .progress{width: 195px;}
+}
+@media screen and (min-width: 2000px) {
+    html, body{font-size: 81.25%;}
+    .login-wrap{width: 400px;height:300px;left: 65%;}
+    .login-wrap .itxt{width: 320px;}
+    .login-wrap .login_button{width: 362px;}
+    .login-wrap div.line{margin-bottom: 30px;}
+    .error{margin: 0 0 5px 0;}
+    .progress{width: 265px;}
+    .maincontent .hotstation-type .dateName{margin-right: 10px;}
+    .blue-wrap.hotstation-type, .blue-wrap.cost-wrap, .blue-wrap.mycost-wrap{width: 350px;}
+    .select_s .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){width: 150px;}
+    .button_bar .optionsWrap .option i{top:2px;}
+    .maincontent .hotstation-type.hotStation{width: 500px;}
+    .maincontent .hotstation-table{width: 500px;}
+    .maincontent .chartWrap{width: calc(100% - 550px);right:530px;}
+    .stationcover_table{width: 750px;height: 400px;}
+    .stationcover_table .tablehead{height: 35px;line-height: 35px;}
+    .stationcover_table .bodyline{height: 28px;line-height: 28px;}
+    .stationcover_table .left{width: 500px;}
+    .stationcover_table .tablebody{height: 360px;}
+    .button_bar .optionlistWrap{width: 500px;height: auto;}
+    .button_bar .optionlistWrap .listname{width: 80px;}
+    .index1.button_bar .optionlistWrap .listname{width: 110px;text-align: left;}
+    #rtbusAlert{width: 260px;margin-left: -130px;}
+    .nav_title{top:80px;}
+    .itembutton{width: 100px;}
+    .hotlineOd, .hotstationOd{width: 450px;}
+    .lineinfo.detail{width: 400px;height: auto;}
+    .lineinfo .title{width: 160px;}
+    .nav_title .hotstationNav{width: 300px;}
+    .nav_title li a.back{width: 40px;height: 40px;line-height: 40px;}
+    .nav_title li.buslinename span, .nav_title li.buslinename a{height: 40px;line-height: 40px;}
+    .maincontent .businfo_wrap{top:110px;height: calc(100% - 355px);}
+    .maincontent .bottom_wrap .station_wrap .station_item, .maincontent .bottom_wrap .station_wrap .station_item span.num{font-size: 0.9rem;}
+    .table_five table .title{min-width: 100px;}
+    .maincontent .bottom_wrap{bottom: 50px;}
+    .nav_title{top:80px;}
+    .itembutton{width: 100px;}
+    .hotlineOd, .hotstationOd{width: 450px;}
+    .nav_title .hotstationNav{width: 300px;}
+    .nav_title li a.back{width: 40px;height: 40px;line-height: 40px;}
+    .nav_title li.buslinename span, .nav_title li.buslinename a{height: 40px;line-height: 40px;}
+    .table_five table .title{min-width: 100px;}
+    .data_nowraptitle{top:80px;}
+    .dis_item{top:80px;}
+    .cost-wrap{width: 450px;}
+    .calc-cost-wrap{margin-top: 20px;}
+    .maincontent .addState, .maincontent .calc-cost, .maincontent .addedState, .maincontent .mycost-wrap{width: 450px;}
+    .button_bar .optionlistWrap.hotstartend .listname{width: 100px;}
+    .infotripCost{font-size:1.4rem;}
+    .topbar_right .child, .topbar_right .thirdset{width: 200px;}
+    .realbus_chart_wrap{height: calc(100% - 120px);}
+    .realbus_chart_wrap .chartWrap{height: calc(100% - 160px);bottom: 30px;}
+    .date_pop_dlg{top:140px;right:140px;}
+    .rightTopStation.roaddetail{height: calc(100% - 160px);}
+    .button_bar .searchDiv input, .buslineSearchWrap{width: 400px;}
+    .button_bar .optionsWrap i.indexSearchCheck{right:376px;}
+    .left-container, .industry-index-info, .right-container{top:90px !important;}
+    .hotplanOd{width: 600px;}
+}
+@media screen and (min-width: 3000px) {
+    .realbus_chart_wrap .chartWrap{height: calc(100% - 220px);bottom: 50px;}
+    .date_pop_dlg{right:150px;}
+}
+
+
+/*height*/
+@media screen and (max-height: 680px){
+    .maincontent .hotstation-type{padding: 5px 20px;}
+    /*.maincontent .cost-wrap{top:150px;height: 170px;}*/
+    .cost-wrap .blue-table th, .cost-wrap .blue-table td, .mycost-wrap .blue-table th, .mycost-wrap .blue-table td{padding-top:2px;padding-bottom: 2px;font-size: 11px;}
+    /*.maincontent .mycost-wrap{top:330px;}*/
+    .blue-wrap{font-size: 12px;}
+    .date_pop_dlg{top:85px;}
+
+    .odWrap{top:80px;}
+    .cost-wrap .table_five table th, .cost-wrap .table_five table td{padding: 4px;}
+    .maincontent .addedState, .maincontent .addState, .maincontent .calc-cost{margin: 6px auto;}
+    .maincontent .calc-cost{height: 30px;line-height: 30px;}
+
+    .optionlistWrap.hotstartend{padding-top: 10px;max-height: 410px;overflow-y: auto;}
+    .optionlistWrap.hotstartend .radioButton, .optionlistWrap.hotstartend .list label{height: 20px;line-height: 20px;font-size: 1rem;}
+    .button_bar .optionlistWrap .listname{font-size: 1rem;}
+    .optionlistWrap.hotstartend .list{padding-top: 0px;}
+}
+/*@media screen and (min-height: 600px){*/
+    /*.maincontent .hotstation-type{padding: 5px 20px;}*/
+    /*.maincontent .cost-wrap{top:150px;height: 158px;}*/
+    /*.cost-wrap .blue-table th, .cost-wrap .blue-table td, .mycost-wrap .blue-table th, .mycost-wrap .blue-table td{padding-top:2px;padding-bottom: 2px;font-size: 12px;}*/
+    /*.maincontent .mycost-wrap{top:315px;}*/
+    /*.blue-wrap{font-size: 12px;}*/
+/*}*/
+@media screen and (min-height: 700px) {
+    .maincontent .hotstation-table .hot-table table th{font-size: 1.2rem;padding-top: 0.4rem;padding-bottom: 0.4rem;}
+    .maincontent .hotstation-table .hot-table table td{font-size: 1rem;padding-top: 0.28rem;padding-bottom: 0.28rem;}
+    .maincontent .hotstation-table .hot-table .tbody-wrap .pagination-wrap{margin-top: 20px;}
+    /*.maincontent .cost-wrap .blue-table th, .maincontent .mycost-wrap .blue-table th, .maincontent .cost-wrap .blue-table td, .maincontent .mycost-wrap .blue-table td{padding-top: 0.6rem;padding-bottom: 0.6rem;}*/
+    /*.maincontent .cost-wrap{height: 200px;}*/
+    /*.maincontent .mycost-wrap{top:390px;}*/
+    /*#sort{height:calc(100% - 287px);width: 25%;}*/
+    /*#sort2{height: 180px;width: 25%;}*/
+}
+@media screen and (min-height: 780px) {
+    .maincontent .hotstation-table .hot-table table th{font-size: 1.2rem;padding-top: 0.5rem;padding-bottom: 0.5rem;}
+    .maincontent .hotstation-table .hot-table table td{font-size: 1rem;padding-top: 0.35rem;padding-bottom: 0.35rem;}
+    .maincontent .hotstation-table .hot-table .tbody-wrap .pagination-wrap{margin-top: 20px;}
+    /*.maincontent .cost-wrap .blue-table th, .maincontent .mycost-wrap .blue-table th, .maincontent .cost-wrap .blue-table td, .maincontent .mycost-wrap .blue-table td{padding-top: 0.7rem;padding-bottom: 0.7rem;}*/
+    /*.maincontent .cost-wrap{height: 220px;}*/
+    /*.maincontent .mycost-wrap{top:415px;}*/
+    /*#sort{height:calc(100% - 220px);}*/
+    /*#sort2{height: 220px;}*/
+}
+@media screen and (min-height: 899px) {
+    .maincontent .hotstation-table .hot-table table th{font-size: 1.2rem;padding-top: 1rem;padding-bottom: 1rem;}
+    .maincontent .hotstation-table .hot-table table td{font-size: 1rem;padding-top: 0.6rem;padding-bottom: 0.6rem;}
+    .maincontent .hotstation-table .hot-table .tbody-wrap .pagination-wrap{margin-top: 25px;}
+
+}
+@media screen and (min-height: 1000px) {
+    /*.maincontent .hotstation-table .hot-table .thead-wrap{height: 45px;}*/
+    .maincontent .hotstation-table .hot-table table th{font-size: 1.3rem;padding-top: 1rem;padding-bottom: 1rem;}
+    .maincontent .hotstation-table .hot-table table td{font-size: 1.2rem;padding-top: 0.8rem;padding-bottom: 0.8rem;}
+    .maincontent .hotstation-table .hot-table .tbody-wrap .pagination-wrap{margin-top: 25px;}
+}
+@media screen and (min-height: 1400px) {
+    /*.maincontent .hotstation-table .hot-table .thead-wrap{height: 52px;}*/
+    .maincontent .hotstation-table .hot-table table th{font-size: 1.3rem;padding-top: 1.5rem;padding-bottom: 1.5rem;}
+    .maincontent .hotstation-table .hot-table table td{font-size: 1.2rem;padding-top: 1.7rem;padding-bottom: 1.7rem;}
+    .maincontent .hotstation-table .hot-table .tbody-wrap .pagination-wrap{margin-top: 40px;}
+    .paginationjs .paginationjs-pages li>a{font-size: 18px;}
+    .paginationjs .paginationjs-pages li>a{height: 30px;line-height: 30px;min-width: 30px;}
+    .paginationjs .paginationjs-pages li.active>a{height: 30px;line-height: 30px;}
+}
+
+
+
+
+
+/*#sort, #sort2{position: fixed;left: 10px;}*/
+@media screen and (max-width: 3840px) and (max-height: 2160px){
+    /*#sort{height:calc(100% - 715px);width: 25%;top:120px;}*/
+    /*#sort2{height: 520px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 280px;}*/
+    .topbar_right .child{top:61px;}
+}
+@media screen and (max-width: 2560px) and (max-height: 1440px){
+    /*#sort{height:calc(100% - 545px);width: 25%;top:120px;}*/
+    /*#sort2{height: 350px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 220px;}*/
+    .topbar_right .child{top:61px;}
+}
+@media screen and (max-width: 2400px) and (max-height: 1350px){
+    /*#sort{height:calc(100% - 545px);width: 25%;top:120px;}*/
+    /*#sort2{height: 350px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 180px;}*/
+    .topbar_right .child{top:61px;}
+}
+@media screen and (max-width: 1920px) and (max-height: 1080px){
+    /*#sort{height:calc(100% - 450px);width: 25%;top:80px;}*/
+    /*#sort2{height: 300px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 180px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1688px) and (max-height: 1060px){
+    /*#sort{height:calc(100% - 400px);width: 25%;top:80px;}*/
+    /*#sort2{height: 250px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 160px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1600px) and (max-height: 900px){
+    /*#sort{height:calc(100% - 370px);width: 25%;top:80px;}*/
+    /*#sort2{height: 220px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 120px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1536px) and (max-height: 760px){
+    /*#sort{height:calc(100% - 330px);width: 22%;top:80px;}*/
+    /*#sort2{height: 180px;width: 22%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 110px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1400px) and (max-height: 900px){
+    /*#sort{height:calc(100% - 370px);width: 25%;top:80px;}*/
+    /*#sort2{height: 220px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 120px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1400px) and (max-height: 770px){
+    /*#sort{height:calc(100% - 330px);width: 25%;top:80px;}*/
+    /*#sort2{height: 180px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 100px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1366px) and (max-height: 680px){
+    /*#sort{height:calc(100% - 300px);width: 24%;top:60px;}*/
+    /*#sort2{height: 170px;width: 24%;bottom: 45px;}*/
+    #sort2 table{width: 85%;}
+    .table_wrap table th{padding: 0.5rem;}
+    /*.table_wrap table td .dirdesc{width: 90px;}*/
+    .table_wrap table.nostyle td .title{width: 135px;}
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1280px) and (max-height: 1024px){
+    /*#sort{height:calc(100% - 350px);width: 25%;top:80px;}*/
+    /*#sort2{height: 200px;width: 25%;bottom: 50px;}*/
+    /*.table_wrap table td .dirdesc{width: 90px;}*/
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1280px) and (max-height: 800px){
+    /*#sort{height:calc(100% - 350px);width: 25%;top:80px;}*/
+    /*#sort2{height: 200px;width: 25%;bottom: 50px;}*/
+    .table_wrap table.nostyle td .title{margin-top: 0px;}
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1280px) and (max-height: 600px){
+    /*#sort{height:calc(100% - 280px);width: 22%;top:70px;}*/
+    /*#sort2{height: 150px;width: 22%;bottom: 40px;}*/
+    /*.table_wrap table td .dirdesc{width: 80px;}*/
+    .table_wrap table.nostyle td .title{width: 120px;padding: 3px 4px;margin-top: -12px;}
+    .table_wrap table th{font-size: 1rem;}
+    .progress{width: 100px;}
+    .topbar_right .child{top:40px;}
+}
+@media screen and (max-width: 1024px) and (max-height: 770px){
+    /*#sort{height:calc(100% - 280px);width: 25%;top:70px;}*/
+    /*#sort2{height: 150px;width: 25%;bottom: 40px;}*/
+    .table_wrap table th{padding: 0.4rem;}
+    /*.table_wrap table td .dirdesc{width: 60px;}*/
+    .table_wrap table.nostyle td .title{width: 110px;padding: 3px 4px;}
+    .topbar_right .child{top:30px;}
+}
+
+
+@media screen and (min-width: 1800px) and (min-height: 1000px){
+    .frontleft_wrap{width: 450px;}
+    /*#sort{height:calc(100% - 250px);}*/
+    /*#sort2{height: 250px;}*/
+    /*.table_wrap table td .dirdesc{width: 120px;}*/
+}
+@media screen and (min-width: 2000px) and (min-height: 1200px){
+    html, body{font-size: 81.25%;}
+    .frontleft_wrap{width: 550px;}
+    /*#sort{top:35px;}*/
+    /*#sort2{height: 320px;}*/
+    /*.table_wrap table td .dirdesc{width: 120px;}*/
+    .table_wrap table.nostyle td .title{margin-top: 0;width: 170px;}
+    .table_wrap table th, .table_wrap table td{padding: 0.8rem;}
+    /*.topbar_right ul.parent>li>a{width: 160px;}*/
+    /*.topbar_right ul.parent>li.active .navcurrent{width: 160px;}*/
+    .city{height: 40px;line-height: 39px;top:10px;width: 120px;}
+    #city .cityLocation{top:-12px;}
+    #city i.down{top:-15px;}
+    .citytext{width: 60px;}
+    .topbar_right{height: 60px;line-height: 60px;}
+    .top_bar #logo{height: 80px;margin-left: -277px;width: 554px;}
+    .top_bar #logo .topbar_name{font-size: 32px;height: 80px;line-height: 80px;}
+    .top_bar #logo .title_logo{width: 50px;height: 50px;margin-left: 60px;margin-top: 15px;}
+    .numList{top:120px;}
+    .button_bar{top:80px;}
+    .rightTopStation{top:120px;height: calc(100% - 410px);}
+    .numindex{top:120px;}
+    /*.topbar_right ul.parent>li{float: left;}*/
+    /*.topbar_right ul.parent>li.third{margin-left: 30%;}*/
+
+}
+/*@media screen and (min-width: 1500px) and (min-height: 850px){*/
+    /*#sort{height: 65%;}*/
+    /*#sort2{height: 35%;}*/
+/*}*/
+/*@media screen and (min-height: 950px){*/
+    /*/!*#sort{height: 72%;}*!/*/
+    /*/!*#sort2{height: 28%;}*!/*/
+    /*/!*.table_wrap table.nostyle td .title{margin-top: 0;}*!/*/
+/*}*/
+
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+	background-color: #000;
+}
+
+/*背景*/
+
+::-webkit-scrollbar-track {
+	background-color: #000;
+}
+
+/* 滚动轨道*/
+::-webkit-scrollbar-thumb {
+	border-radius: 4px;
+	background: #343b49;
+}

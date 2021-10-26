@@ -1,0 +1,132 @@
+.station_item {
+  float: left;
+  width: 20px;
+  margin: 0 auto;
+  line-height: 24px;
+  border: 1px solid red;
+}
+
+body {
+  font-family: 微软雅黑;
+  font-size: 20px;
+  user-select: none;
+  color: rgb(255, 255, 255);
+}
+
+.linetext {
+  white-space: nowrap;
+  overflow: hidden;
+  display: none;
+}
+
+.comment-tip {
+  background: rgba(68, 215, 253, .2);
+  font-size: 20px;
+  border-radius: 2px;
+  padding: 0.4em 0.6em 0.4em 0.6em;
+  display: none;
+  overflow: hidden;
+  max-height: 58px;
+}
+
+#seachBox {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 888;
+}
+/* #seachBox input{
+  width: 800px;
+  height: 20px;
+} */
+#searchList {
+  position: absolute;
+  top: 30px;
+  /* right: 2px; */
+  display: none;
+  height: 50vh;
+  width: 450px;
+  background-color: #1b4074;
+  z-index: 99999999999;
+}
+
+#searchList ul {
+  width: 120%;
+  height: 100%;
+  overflow-y: scroll;
+  background-color: #1b4074;
+}
+
+#searchList ul li {
+  width: 120%;
+  cursor: pointer;
+  padding: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-family: 微软雅黑;
+}
+
+#searchList ul li:hover {
+  color: blue;
+}
+
+#selectBar {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  color: #fff;
+  z-index: 9999;
+}
+#selectBar .select-item {
+  font-size: 20px;
+  /* height: 60px; */
+  /* line-height: 60px; */
+}
+#selectBar .select-item label {
+  font-size: 20px;
+}
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.6);
+  z-index: 999;
+}
+.loading .circle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  animation: run 1s linear infinite;
+  border-radius: 50%;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+@keyframes run {
+  from {
+    transform: translate3d(-50%, -50%, 0) rotate(0);
+  }
+  to {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+#radarChart {
+  width: 300px;
+  height: 250px;
+  margin: 0 auto;
+}
+.body-windowFloat p {
+  padding-left: 5px;
+    padding-top: 5px;
+    color: #fff;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 18px;
+}

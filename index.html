@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" daily_flag="2" secure_city="010" secure_cityname="北京市">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>城市交通状态与安全态势协同关联分析平台</title>
+    <link rel="stylesheet" href="./Supports/css/common.css" class="AMap.style">
+    <link rel="stylesheet" href="./Supports/css/index.css">
+    <link href="./Supports/公交大数据_files/main.css" rel="stylesheet">
+    <link href="./Supports/公交大数据_files/index.css" rel="stylesheet">
+    <!-- 浮动框css -->
+    <link rel="stylesheet" href="./Supports/css/windowFloatFirst.css">
+    <link rel="stylesheet" href="./Supports/css/windowFloat.css">
+    <!-- 浮动框css -->
+
+    <script src="./Supports/公交大数据_files/bootstrap.min.js"></script>
+    <script src="./Supports/公交大数据_files/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script src="Supports/data/road_nodes.js"></script>
+    <script src="Supports/data/nrc1022.js"></script>
+    <script src="Supports/data/incid1022.js"></script>
+    <script src="Supports/data/sp_evolve1022.js"></script>
+    <script src="Supports/data/road_nodes.js"></script>
+    <script src="Supports/data/road_with_car.js"></script>
+    <script src="Supports/data/liList1023.js"></script>
+    <script src="Supports/data/beforeList1023.js"></script>
+    <script src="Supports/data/bread_points.js"></script>
+    <script src="Supports/data/T10_bread_points.js"></script>
+    <style type="text/css">
+        .demo-title {
+            position: absolute;
+            top: 25px;
+            left: 35%;
+            z-index: 10000;
+
+        }
+
+        .bgr {
+            background: black;
+            padding: 10px;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin: 10;
+            color: rgb(180, 180, 190);
+        }
+
+        .cont {
+            overflow: hidden;
+            /*内容超出后隐藏*/
+            text-overflow: ellipsis;
+            /* 超出内容显示为省略号*/
+            white-space: nowrap;
+            /*文本不进行换行*/
+        }
+
+        .box {
+            bottom: 500px;
+            width: 350px;
+            height: 150px;
+            right: 15%;
+            font-size: 22px;
+            background: #1b4074;
+            font-weight: bolder;
+            text-align: center;
+            background-image: -webkit-linear-gradient(bottom, red, #fd8403, yellow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(0, 128, 0, 1)), to(rgba(51, 51, 51, 1)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 雷达图浮动框 -->
+        <div class="windowFloat" :style="{'display':isFloat?'block':'none'}">
+            <div class="header-windowFloat">
+                <div class="left">
+                    <img src="./Supports/image/tj.png" alt="" srcset="">
+                    <span>交通异常风险态势评估</span>
+                </div>
+                <div class="right">
+                    <div class="r-box">
+                        <img src="./Supports/image/ss.png" alt="" @click="closeFloat">
+                    </div>
+                </div>
+            </div>
+            <div class="body-windowFloat">
+                <div id="radarChart"></div>
+            </div>
+        </div>
+
+        <!-- 异常解析浮动框 -->
+        <div class="windowFloat" :style="{'display':isFloat1?'block':'none', 'bottom': '350px'}">
+            <div class="header-windowFloat">
+                <div class="left">
+                    <img src="./Supports/image/tj.png" alt="" srcset="">
+                    <span>交通异常检测与解析</span>
+                </div>
+                <div class="right">
+                    <div class="r-box">
+                        <img src="./Supports/image/ss.png" alt="" @click="closeFloat1">
+                    </div>
+                </div>
+            </div>
+            <div class="body-windowFloat">
+                <p>交通异常识别时间：{{floatData.detectTime}}</p>
+                <p>事件描述：{{floatData.incid_desc}}</p>
+                <p>上报时间：{{floatData.startTime}}</p>
+                <p>结束时间：{{floatData.endTime}}</p>
+            </div>
+        </div>
+
+
+        <!-- 案例搜索浮动框 -->
+        <div id="seachBox">
+            <!-- <input value="currentItem.val" type="text" @focus="focusStart" @keyup="filter($event)"
+                placeholder=" "> -->
+            <div class="box">交通异常风险排名</div>
+            <div id="searchList" :style="{'display':isShow?'block':'none'}">
+                <ul>
+                    <li key='item.id' @click="searchList($event)" v-for="item in liList">
+                        <p class="cont">{{item.val}}</p>
+                    </li>
+                    <li key='item.id' @click="searchList($event)" v-for="item in liList">
+                        <p class="cont">{{item.src}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- <div id="panel"></div> -->
+        <div class="loading" v-show="loading">
+            <div class="circle"></div>
+        </div>
+
+        <div class="amap_bg amap-container" id="amap" style="background: rgb(54, 36, 51);">
+            <div class="amap-maps">
+            </div>
+        </div>
+        <!-- <img src="Supports\image\pic.gif" alt="图片无法显示！" id="im" /> -->
+
+        <div class="demo-title">
+            <h1><span class='bgr'>城市交通状态与安全态势协同关联分析平台</span></h1>
+        </div>
+
+        <script src="https://webapi.amap.com/maps?v=2.0&key=7f6205c8eec650c874c94de0b4aacc18"></script>
+        <script src="https://webapi.amap.com/loca?v=2.0.0&key=7f6205c8eec650c874c94de0b4aacc18"></script>
+        <script>
+            // 初始化地图容器
+            var map = new AMap.Map("amap", {
+                resizeEnable: true,
+                center: [116.381105, 39.998579],
+                zoom: 13.9,
+                viewMode: '3D',
+                features: ['point', 'road'],
+                // mapStyle: 'amap://styles/4e20baf67ef643952ae6357398c3c1c9',
+                mapStyle: 'amap://styles/darkblue'
+            });
+
+            // 初始化可视化容器
+            var loca = new Loca.Container({
+                map,
+            });
+
+            // 研究区间覆盖范围
+            var path = [
+                [116.348206, 40.025370],
+                [116.412408, 40.024450],
+                [116.410519, 39.967113],
+                [116.377560, 39.966455],
+                [116.378590, 39.976584],
+                [116.373784, 39.991579],
+                [116.348206, 40.025370]
+            ]
+            var polygon = new AMap.Polygon({
+                path: path,
+                strokeColor: "#FFFF00",
+                strokeWeight: 2,
+                strokeOpacity: 0.6,
+                fillOpacity: 0.2,
+                fillColor: "#1791fc",
+                zIndex: 50,
+                map: map
+            })
+
+            function showline(lineArr, rid) {
+                // Line 
+                var polyline = new AMap.Polyline({
+                    path: lineArr, // 设置线覆盖物路径
+                    bubble: false,
+                    showDir: false,
+                    strokeColor: '#00AAFF', // 线颜色
+                    strokeOpacity: 0.3, // 线透明度
+                    strokeWeight: 3, // 线宽
+                    strokeStyle: 'solid', // 线样式
+                    geodesic: true, // 绘制大地线
+                    lineCap: 'round', // 折线两端样式
+                    map: map
+                })
+            }
+            roads.forEach(function (e, ind) {
+                showline(nodes[e], e);
+            })
+
+            // --------------------- 异常检测呼吸点标识 ------------------
+            // 黄色呼吸点
+            var geoLevelE = new Loca.GeoJSONSource({
+                data: bread_info
+            });
+            var breathYellow = new Loca.ScatterLayer({
+                loca,
+                opacity: 0.5,
+                visible: true,
+                zooms: [2, 22],
+            });
+            breathYellow.setSource(geoLevelE);
+            breathYellow.setStyle({
+                unit: 'meter',
+                size: [200, 200],
+                borderWidth: 0,
+                texture: 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_yellow.png',
+                duration: 2000,
+                animate: true,
+            });
+
+            // top10 红色呼吸点
+            var geoLevelF = new Loca.GeoJSONSource({
+                data: T10_incid_info
+            });
+
+            var breathRed = new Loca.ScatterLayer({
+                loca,
+                opacity: 0.5,
+                visible: true,
+                zooms: [2, 22],
+            });
+            breathRed.setSource(geoLevelF);
+            breathRed.setStyle({
+                unit: 'meter',
+                size: [300, 300],
+                borderWidth: 0,
+                texture: 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
+                duration: 2000,
+                animate: true,
+            });
+            // 启动渲染动画
+            loca.animate.start();
+
+
+            //-------------------------display function -------------------------
+            // 路段颜色定义（基于速度归一化值0~1，越大表明月拥堵）
+            function color_selec(sp) {
+                if (sp < 0.1) {
+                    return '#FFAA00'
+                } else if (sp < 0.2) {
+                    return '#FFAA00'
+                } else if (sp < 0.3) {
+                    return '#FF7F00'
+                } else if (sp < 0.4) {
+                    return '#FF7F00'
+                } else if (sp < 0.5) {
+                    return '#FF5500'
+                } else if (sp < 0.6) {
+                    return '#FF5500'
+                } else if (sp < 0.7) {
+                    return '#FF2A00'
+                } else if (sp < 0.8) {
+                    return '#FF2A00'
+                } else if (sp < 0.9) {
+                    return '#FF0000'
+                } else {
+                    return '#FF0000'
+                }
+            }
+            var O_markers = [];
+            var D_markers = [];
+            var OD_lines = [];
+            var O_marker;
+            var D_marker;
+            var s_line;
+            var incident_icons = [];
+            var incident_icon;
+
+            //var tree_ind = 130
+            //document.getElementById('start').onclick = display_all;
+
+
+            vm = new Vue({
+                el: '#app',
+                data: {
+                    liList: [],
+                    beforeList: [],
+                    loading: false,
+                    currentItem: null,
+                    isShow: true,
+                    isFloat: false,
+                    isFloat1: false,
+                    incid_info: [],
+                    nrc_trees: [],
+                    nodes: [],
+                    sp_evolve: [],
+                    // 浮窗数据
+                    floatData: []
+                },
+                async created() {
+                    this.beforeList = beforeList
+                    this.liList = await this.getliList()
+                },
+                beforeDestory() {
+                    this.isFloat = false
+                    this.isFloat1 = false
+                },
+                destrory() {
+                    this.isFloat = false
+                    this.isFloat1 = false
+                },
+                methods: {
+                    // 请求数据
+                    getliList(keyword) {
+                        this.loading = true
+                        return new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                                let temp = liList.filter((item, index, arr) => {
+                                    return item.val.indexOf(keyword) != -1
+                                    return item.src.indexOf(keyword) != -1
+                                })
+                                if (temp.length === 0) {
+                                    result = liList
+                                } else {
+                                    result = temp
+                                }
+                                this.loading = false
+                                resolve(result)
+                            }, 1000)
+                        })
+                    },
+                    // 关闭浮窗
+                    closeFloat() {
+                        this.isFloat = false
+                    },
+                    closeFloat1() {
+                        this.isFloat1 = false
+                    },
+                    searchList: function (e) {
+                        this.isShow = true;
+                        this.isFloat = true
+                        this.isFloat1 = true
+                        let obj = this.beforeList.find((o, index) => o.desc === e.target.innerText)
+                        console.log(obj)
+                        this.floatData = obj
+                        this.renderRadarChart(obj)
+                        this.display_all(obj['rank_no'])
+
+                    },
+                    // 渲染雷达图
+                    renderRadarChart(dataObj) {
+
+                        const fieldMap = [
+                            { name: '道路等级', field: 'roadClass', max: 1 },
+                            { name: '事件类型', field: 'evt_type', max: 1 },
+                            { name: '速度降幅比', field: 'speedDownRate', max: 1 },
+                            { name: '拥堵长度(米)', field: 'congestionLength', max: 2450 },
+                            { name: '拥堵程度', field: 'congestionDegree', max: 1 }]
+                        // console.log(11111, dataObj);
+                        const indicator = []
+                        const value = []
+                        fieldMap.forEach(item => {
+                            indicator.push({
+                                name: item.name,
+                                max: item.max
+                            })
+                            value.push(dataObj[item.field] || 0)
+                        })
+                        this.radarChart = echarts.init(document.getElementById('radarChart'));
+                        const option = {
+                            radar: {
+                                radius: '80',
+                                indicator,
+                                name: {
+                                    textStyle: {
+                                        color: '#fff',
+                                        fontSize: 12,
+                                    },
+                                    formatter(params) {
+                                        return params.replace(/\//g, "\n");
+                                    },
+                                }
+                            },
+                            series: [{
+                                type: 'radar',
+                                itemStyle: {
+                                    color: '#F9713C'
+                                },
+                                data: [
+                                    {
+                                        value,
+                                        label: {
+                                            normal: {
+                                                show: true,
+                                                color: '#ffff00',
+                                                formatter: function (params) {
+                                                    return params.value
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }]
+                        };
+                        this.radarChart.setOption(option)
+                    },
+
+                    display_all(tree_ind) {
+                        // 每次显示前，先清除上次已加载的点、线、标志，并再次初始化
+                        map.remove(O_markers);
+                        map.remove(D_markers);
+                        map.remove(OD_lines);
+                        map.remove(incident_icons);
+                        O_markers = [];
+                        D_markers = [];
+                        OD_lines = [];
+                        incident_icons = [];
+                        //var tree_ind = document.getElementById('rid').value; // 键入的案例编号
+                        // ----- 遍历每个案例中的异常路段，显示路段两端节点和连线
+                        nrc_trees[String(tree_ind)].forEach(function (e, ind) {
+
+                            O_marker = new AMap.CircleMarker({
+                                center: nodes[e][0],
+                                fillColor: '#7FFF55',
+                                strokeColor: '#7FFF55',
+                                radius: 4,
+                                fillOpacity: 0.5,
+                                strokeOpacity: 0.5,
+                                strokeWeight: 2
+                            });
+                            O_markers.push(O_marker); // 道路段起点汇总
+
+                            D_marker = new AMap.CircleMarker({
+                                center: nodes[e][nodes[e].length - 1],
+                                fillColor: '#7FFF55',
+                                strokeColor: '#7FFF55',
+                                radius: 4,
+                                fillOpacity: 0.5,
+                                strokeOpacity: 0.5,
+                                strokeWeight: 2
+                            });
+                            D_markers.push(D_marker); // 道路段起点汇总
+
+                            s_line = new AMap.Polyline({
+                                path: nodes[e],
+                                strokeColor: color_selec(sp_evolve[String(tree_ind)][ind]),
+                                strokeWeight: 8,
+                                strokeOpacity: 0.9, // 线透明度
+                                bubble: false,
+                                showDir: true,
+                                strokeStyle: 'solid',
+                                geodesic: true,
+                                lineCap: 'round'
+                            });
+                            OD_lines.push(s_line);  // 道路段连线汇总
+                        });
+                        map.add(O_markers);  // 加载到地图
+                        map.add(D_markers);
+                        map.add(OD_lines);
+
+                        // ***************  展示事件信息 ***************
+                        ele = incid_info[String(tree_ind)]; // 加载编号对应的事件信息
+                        // 事件图标类型选择
+                        if (ele[6] === '101') {
+                            var icon = new AMap.Icon({
+                                image: "Supports/data/acc.png",
+                                imageSize: new AMap.Size(25, 25)
+                            });
+                        } else if (ele[6] === '201') {
+                            var icon = new AMap.Icon({
+                                image: "Supports/data/road_work.png",
+                                imageSize: new AMap.Size(25, 25)
+                            });
+                        } else if (ele[6] === '401') {
+                            var icon = new AMap.Icon({
+                                image: "Supports/data/expo.png",
+                                imageSize: new AMap.Size(25, 25)
+                            });
+                        }
+                        // 把图标加载到地图
+                        incident_icon = new AMap.Marker({
+                            icon: icon,
+                            position: [ele[4], ele[5]],
+                            offset: new AMap.Pixel(-7, -7)
+                        });
+                        incident_icons.push(incident_icon);
+                        map.add(incident_icons);
+                    },
+
+                    focusStart() {
+                        this.isShow = true;
+                    },
+                    filter(e) {
+                        this.getliList(e.target.value).then(res => {
+                            this.liList = res
+                        })
+                    }
+
+                }
+            });
+
+        </script>
+</body>
+
+</html>
